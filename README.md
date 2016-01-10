@@ -1,4 +1,4 @@
-To use, define include on a host and define a variable in the format:
+To use, attach the role to a host or group, and define a hash in the format:
 
 ```
 trac:
