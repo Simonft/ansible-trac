@@ -1,0 +1,14 @@
+# Base trac config
+
+---
+- name: Ensure directories for config exists
+  file:
+    state: directory
+    path: "/etc/trac/"
+  
+- name: template default config
+  template:
+    src: etc/trac/default_config.ini.j2
+    dest: /etc/trac/default_config.ini
+  tags:
+    - template_config
