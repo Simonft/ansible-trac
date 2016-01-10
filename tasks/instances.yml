@@ -22,8 +22,15 @@
     dest: "{{ item.value.path }}/VERSION"
   with_dict: trac["instances"]
 
-- name: template individual configs
+- name: Template individual configs
   template:
     src: config.ini.j2
     dest: "{{ item.value.path }}/conf/trac.ini"
+  with_dict: trac["instances"]
+
+- name: Copy static files
+  copy:
+    src: "{{ item.value.static_files }}"
+    dest: "{{ item.value.path }}/static"
+  when: item.value.static_files is defined
   with_dict: trac["instances"]
