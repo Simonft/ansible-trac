@@ -9,3 +9,5 @@ trac:
         <section heading>:
           <option>: <value>
 ```
+
+Tested on Debian Jessie with Trac 1.0.
