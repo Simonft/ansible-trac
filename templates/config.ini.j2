@@ -1,0 +1,13 @@
+[inherit]
+file: /etc/trac/default_config.ini
+
+{% if item.value.config is defined %}
+{% for section, options in item.value.config.iteritems() %}
+[{{ section }}]
+{% if options %}
+{% for key, value in options.iteritems() %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}

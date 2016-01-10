@@ -1,0 +1,44 @@
+---
+- name: install trac
+  apt:
+    name: trac
+    state: installed
+
+- name: Ensure directories for config exists
+  file:
+    state: directory
+    path: "/etc/trac/"
+  
+- name: template default config
+  template:
+    src: etc/trac/default_config.ini.j2
+    dest: /etc/trac/default_config.ini
+  tags:
+    - template_config
+
+- name: Ensure base directories for trac instances exist
+  file:
+    state: directory
+    path: "{{ item.value.path }}"
+  with_dict: trac["instances"]
+
+- name: Ensure subdirectories for trac instances exist
+  file:
+    state: directory
+    path: "{{ item[0].path }}/{{ item[1] }}"
+  with_nested:
+    - "{{ trac.instances.values() }}"
+    - ["conf", "db", "htdocs", "log", "plugins", "templates"]
+
+# TODO: Figure out what this file actually does
+- name: Ensure VERSION file exists in all trac instances
+  copy:
+    src: VERSION
+    dest: "{{ item.value.path }}/VERSION"
+  with_dict: trac["instances"]
+
+- name: template individual configs
+  template:
+    src: config.ini.j2
+    dest: "{{ item.value.path }}/conf/trac.ini"
+  with_dict: trac["instances"]

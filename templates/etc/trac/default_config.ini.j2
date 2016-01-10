@@ -1,0 +1,8 @@
+{% for section, options in trac.default_config.iteritems() %}
+[{{ section }}]
+{% if options %}
+{% for key, value in options.iteritems() %}
+{{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+{%- endfor %}
