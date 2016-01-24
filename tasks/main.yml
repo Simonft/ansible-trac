@@ -3,7 +3,13 @@
   apt:
     name: trac
     state: installed
+  tags:
+    - trac
 
-- include: base_config.yml
-
-- include: instances.yml
+- include: "{{ item }}"
+  with_items:
+    - base_config.yml
+    - instances.yml
+    - plugins.yml
+  tags:
+    - trac

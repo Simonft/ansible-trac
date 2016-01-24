@@ -1,0 +1,8 @@
+---
+- name: install plugins via apt
+  apt:
+    name: 'trac-{{ item }}'
+  with_items: trac.plugins.apt
+  when: trac.plugins.apt is defined
+  tags:
+    - apt
